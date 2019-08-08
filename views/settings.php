@@ -10,7 +10,7 @@
     <?php wp_nonce_field('update-options'); ?>
 
     <input type="hidden" name="action" value="update" />
-    <input type="hidden" name="page_options" value="airbrake_wordpress_setting_disabled,airbrake_wordpress_setting_project_id,airbrake_wordpress_setting_project_key,airbrake_wordpress_setting_host,airbrake_wordpress_warnings_disabled" />
+    <input type="hidden" name="page_options" value="airbrake_wordpress_setting_disabled,airbrake_wordpress_setting_project_id,airbrake_wordpress_setting_project_key,airbrake_wordpress_setting_host,airbrake_wordpress_setting_disable_warnings" />
 
     <table class="form-table">
       <tr valign="top">
@@ -42,8 +42,8 @@
         <th scope="row">Suppress warnings</th>
         <td>
           <select name="airbrake_wordpress_warnings_disabled">
-            <option value="1"<?php echo get_option('airbrake_wordpress_warnings_disabled') ? ' selected="selected"' : ''; ?>>Yes</option>
-            <option value="0"<?php echo !get_option('airbrake_wordpress_warnings_disabled') ? ' selected="selected"' : ''; ?>>No</option>
+            <option value="1"<?php echo get_option('airbrake_wordpress_setting_disable_warnings') ? ' selected="selected"' : ''; ?>>Yes</option>
+            <option value="0"<?php echo !get_option('airbrake_wordpress_setting_disable_warnings') ? ' selected="selected"' : ''; ?>>No</option>
           </select>
         </td>
       </tr>

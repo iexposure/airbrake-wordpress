@@ -31,7 +31,7 @@ function airbrake_wordpress_install()
     add_option('airbrake_wordpress_setting_project_id', 'FIXME', '', 'yes');
     add_option('airbrake_wordpress_setting_project_key', 'FIXME', '', 'yes');
     add_option('airbrake_wordpress_setting_host', 'api.airbrake.io', '', 'yes');
-    add_option('airbrake_wordpress_warnings_disabled', '0', '', 'yes');
+    add_option('airbrake_wordpress_setting_disable_warnings', '0', '', 'yes');
 
 }
 
@@ -41,7 +41,7 @@ function airbrake_wordpress_uninstall()
     delete_option('airbrake_wordpress_setting_project_id');
     delete_option('airbrake_wordpress_setting_project_key');
     delete_option('airbrake_wordpress_setting_host');
-    delete_option('airbrake_wordpress_warnings_disabled');
+    delete_option('airbrake_wordpress_setting_disable_warnings');
 }
 
 //------------------------------------------------------------------------------
@@ -70,7 +70,7 @@ if (get_option('airbrake_wordpress_setting_project_id') &&
         'projectKey' => get_option('airbrake_wordpress_setting_project_key')
     ]);
     $notifier->addFilter(function ($notice) {
-        if (get_option('airbrake_wordpress_warnings_disabled') && ($notice['errors'][0]['type'] == 'E_WARNING')) {
+        if (get_option('airbrake_wordpress_setting_disable_warnings') && ($notice['errors'][0]['type'] == 'E_WARNING')) {
           return null;
         }
 

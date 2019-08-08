@@ -9,7 +9,7 @@ Author URI: https://github.com/airbrake/airbrake-wordpress
 
 Description: Airbrake lets you discover errors and bugs in your Wordpress install.
 
-Version: 0.2
+Version: 0.2.1
 License: GPL
 */
 
@@ -30,6 +30,9 @@ function airbrake_wordpress_install()
     add_option('airbrake_wordpress_setting_disabled', '1', '', 'yes');
     add_option('airbrake_wordpress_setting_project_id', 'FIXME', '', 'yes');
     add_option('airbrake_wordpress_setting_project_key', 'FIXME', '', 'yes');
+    add_option('airbrake_wordpress_setting_host', 'api.airbrake.io', '', 'yes');
+    add_option('airbrake_wordpress_warnings_disabled', '0', '', 'yes');
+
 }
 
 function airbrake_wordpress_uninstall()
@@ -37,6 +40,8 @@ function airbrake_wordpress_uninstall()
     delete_option('airbrake_wordpress_setting_disabled');
     delete_option('airbrake_wordpress_setting_project_id');
     delete_option('airbrake_wordpress_setting_project_key');
+    delete_option('airbrake_wordpress_setting_host');
+    delete_option('airbrake_wordpress_warnings_disabled');
 }
 
 //------------------------------------------------------------------------------
@@ -57,14 +62,21 @@ function airbrake_wordpress_settings()
 
 if (get_option('airbrake_wordpress_setting_project_id') &&
     get_option('airbrake_wordpress_setting_project_key') &&
+    get_option('airbrake_wordpress_setting_host') &&
     !get_option('airbrake_wordpress_setting_disabled')) {
     $notifier = new Airbrake\Notifier([
+        'host' => get_option('airbrake_wordpress_setting_host'),
         'projectId' => get_option('airbrake_wordpress_setting_project_id'),
-        'projectKey' => get_option('airbrake_wordpress_setting_project_key'),
+        'projectKey' => get_option('airbrake_wordpress_setting_project_key')
     ]);
     $notifier->addFilter(function ($notice) {
+        if (get_option('airbrake_wordpress_warnings_disabled') && ($notice['errors'][0]['type'] == 'E_WARNING')) {
+          return null;
+        }
+
         $notice['params']['language'] = get_bloginfo('language');
         $notice['params']['wordpress'] = get_bloginfo('version');
+
         return $notice;
     });
 

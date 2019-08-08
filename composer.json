@@ -1,6 +1,7 @@
 {
   "name": "airbrake/airbrake-wordpress",
   "description": "Airbrake exception and error notifier for PHP",
+  "type": "wordpress-plugin",
   "keywords": [
     "airbrake",
     "notifier",

@@ -41,7 +41,7 @@
       <tr valign="top">
         <th scope="row">Suppress warnings</th>
         <td>
-          <select name="airbrake_wordpress_warnings_disabled">
+          <select name="airbrake_wordpress_setting_disable_warnings">
             <option value="1"<?php echo get_option('airbrake_wordpress_setting_disable_warnings') ? ' selected="selected"' : ''; ?>>Yes</option>
             <option value="0"<?php echo !get_option('airbrake_wordpress_setting_disable_warnings') ? ' selected="selected"' : ''; ?>>No</option>
           </select>
